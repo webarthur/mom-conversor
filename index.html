@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>MOM Conversor de Texto - #LabPirata</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./helpers.min.css">
+  <style media="screen">
+  h2 {font-size: 2em; font-weight:400; margin-bottom:15px}
+  hr {width: 120px; margin: 0 auto; border:0; border-top: 1px solid rgba(0, 0, 0, .15); margin-bottom:40px }
+  h2.editor {font-size: 1.2em; margin-bottom:5px; font-weight:400}
+  textarea {overflow-y:scroll; border:0; border-radius:3px 0 0 3px}
+  button {border:0; border-radius:3px; background: #b99d6b; color:white; padding:12px 16px; font-weight:600; cursor:pointer}
+  button:hover {opacity: .9}
+  menu {padding:0}
+  a:hover {text-decoration:underline!important; color:#b99d6b!important}
+  footer a:hover {color:#fff!important}
+  #header > menu a {text-decoration:none; color: #333; font-weight: 300; display: inline-block; padding:10px 15px}
+  #conversor button {background: rgba(255, 255, 255, .15)}
+  #conversor button:hover {background: rgba(255, 255, 255, .25); opacity:1}
+  #sobre p {padding:0 15px}
+  #sobre a {text-decoration: underline;}
+  #sobre a:hover {color:#b99d6b}
+  @media (max-width: 480px) {
+    #header {display:block; text-align: center}
+    #header menu a {padding: 10px 10px}
+    #conversor [cols] {width:100%}
+    #conversor button {font-size:1em}
+    #colaboradores [layout~='right-40'] {margin:0!important; margin-bottom: 20px!important}
+    footer [cols] {width:100%; float:none; padding:20px !important; text-align: center}
+  }
+  </style>
+</head>
+<body text="Ubuntu gray-80 line-1.5" layout="border-sizing-all no-margin">
+  <header id="header" layout="max-960 center top-10 flex items-center">
+    <span layout="grow">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/MOM.png" width="160" alt="MEMORY OF MANKIND">
+    </span>
+    <menu>
+      <a href="#sobre">Sobre</a>
+      <a href="#colaboradores">Colaboradores</a>
+      <a href="http://labpirata.com" target="_blank">LabPirata</a>
+    </menu>
+  </header>
+  <section id="conversor" style="background: #b99d6b">
+    <div text="white" layout="max-960 center v-padding-30 top-15 fix">
+      <div cols="2" text="center" onmobile="hidden">
+        <br>
+        <br>
+        <br>
+        <br>
+        <i class="fa fa-mail-forward fa-4x"></i>
+        <br>
+        <br>
+        Cole o texto a ser convertido neste campo.
+      </div>
+      <div cols="8" layout="padding-20">
+        <div id="areaTexto">
+          <h2 class="editor" layout="no-top">Cole abaixo o texto a ser convertido: </h2>
+          <textarea id="texto" rows="18" layout="fluid"></textarea>
+          <div text="center" layout="top-15 bottom-20">
+            <button text="1.2em" onclick="converter($get('texto').value, 'resultado')">
+              <i class="fa fa-gears" layout="opacity-60"></i>
+              Converter
+            </button>
+          </div>
+        </div>
+        <div id="areaResultado" hidden>
+          <h2 class="editor" layout="no-top">Resultado: </h2>
+          <textarea id="resultado" rows="18" layout="fluid gray-10" readonly></textarea>
+          <div text="center" layout="top-15" bottom-20>
+            <button text="1.2em" onclick="voltar()">
+              <i class="fa fa-arrow-left" layout="opacity-60"></i>
+              Voltar
+            </button>
+            &nbsp;
+            &nbsp;
+            <button text="1.2em" layout="self-end" onclick="saveTextAsFile($get('resultado').value)">
+              <i class="fa fa-download" layout="opacity-60"></i>
+              Baixar .txt
+            </button>
+          </div>
+        </div>
+      </div>
+      <div cols="2" onmobile="hidden">
+        <br>
+        <br>
+        <br>
+        <br>
+        <b>Regras:</b>
+        <ul text="small">
+          <li>Parágrafos separados por 7 espaços.</li>
+        </ul>
+        <div text="center">
+          <i class="hidden-xs hidden-sm fa fa-mail-forward fa-4x fa-rotate-180" layout="right-40"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sobre" layout="fix">
+    <div text="center" layout="max-960 center v-padding-30 bottom-40 fix" links="no-decoration gray-80">
+      <h2>Sobre</h2>
+      <hr>
+      <div layout="inline-block right-40  center" style="max-width: 700px">
+        <h3>
+          MOM - Memory of Mankind
+        </h3>
+        <p>
+          <a href="http://memory-of-mankind.com/" target="_blank">
+            <strong>Site oficial</strong>
+          </a>
+          |
+          <a href="https://pt.wikipedia.org/wiki/Memory_of_Mankind" target="_blank">
+            <strong>Wikipédia</strong>
+          </a>
+          |
+          <a href="https://en.wikipedia.org/wiki/Memory_of_Mankind" target="_blank">
+            <strong>English Wikipedia</strong>
+          </a>
+        <p>
+          O <strong>MOM</strong> foi criado por <strong>Martin Kunze</strong> (um artista que trabalha com cerâmica) para resolver um
+          problema: vendo que a maior parte da nossa vida e produção cultural atual é feita digital, terá
+          alguma coisa para historiadores do futuro aproveitarem?
+          Bem, um grande problema é: hoje em dia a quantidade de conteúdo criada online é imensa! Mas
+          tem um porém: vídeos de gatinhos ou de pessoas se machucando são criados e disponibilizados em
+          grande número na internet (fazendo com que descobertas científicas se afoguem em um mar de
+          besteira).
+        </p>
+        <h3>
+          O que queremos que as futuras gerações tenham de nós? <br>
+          Nossa curiosidade ou descobertas? Ou memes?
+        </h3>
+        <p>
+          Imagino que muitos de vocês já tenham tido defeitos no pc que fez com que tudo o que tinham
+          salvo fosse apagado e ainda o fato de que as formas de armazenamento mudam e estragam em um
+          curto espaço de tempo (quando eu era pequeno tinha VHS e Disket, hoje é complicado achar um
+          lugar que leia esses dispositivos). Imagino muitos programas e noticias históricos salvos em VHS
+          que caíram no esquecimento quando não foi possível mais salvá-los.
+        </p>
+        <div id="leiaMais" layout="fix" hidden>
+          <p>
+            Um grande problema é que as empresas de internet também emitem CO2, o que pode fazer com que
+            no futuro sejamos obrigados a deletar muita coisa para salvar o planeta.
+          </p>
+          <h3>
+            Solução? Tablets de argila. Como assim?
+          </h3>
+          <p>
+            Martin, tendo trabalhado com esse material e preocupado com a nossa época poder cair num grande
+            esquecimento (uma <a href="https://en.wikipedia.org/wiki/Solar_storm_of_1859" target="_blank">tempestade</a> solar forte também pode fritar a Internet) pensou na forma de armazenamento mais
+            antiga (desde o Antigo Egito e até antes) e que ainda funciona: tablets de argila.
+          </p>
+          <p>
+            Ele criou uma forma em que pode se salvar imagens e textos (hiper compactados) num tablet de 20
+            x 20 (e microfilmes de cerâmica) que armazenam entre 50.000 e 4 milhões de caracteres podendo
+            aguentar o calor de 1200°C, químicos, água, radiação, magnetismo, pressão e etc por até mais de 1
+            milhão de anos!
+          </p>
+          <h3>
+            O que armazenar? Tudo!
+          </h3>
+          <p>
+            Livros, páginas fdo facebook, blogs, artigos, revistas, comentários, livros pessoais e até diários!
+            Sim! Você pode armazenar a sua história aqui!
+            Todos que participam ganham um Token e a possibilidade de fazer UM tablet com fotos pessoais
+            (caso você faça doação em dinheiro, pode fazer mais e ganhar mais Tokens).
+          </p>
+          <h3>
+            Como participar?
+          </h3>
+          <p>
+            A participação é gratuíta! Você pode mandar o que quiser (o formato foi discutido no último post)
+            com alguns detalhes:
+            Para anexar fotos é necessário colocar um link no texto [Image: “qualquer nome” mais um código
+            de 4 caracteres: 3 letras e um número] e juntar as fotos num quadrado 20 x 20 e então enviar para
+            eles.Caso você faça uma doação, pode montar o tablet da forma que quiser e ainda receber uma réplica
+            em casa.
+          </p>
+          <p>
+            Então, o que acham? Participem, enviem as suas coisas, contem para todos: amigos, familiares,
+            escolas, bibliotecas, museus sobre o projeto, traduzam noticias, postem em seus blogs e páginas e
+            ganhem seu pedaço da “imortalidade”.
+            Uma frase relatada ao projeto diz, em livre tradução:
+            “Memory of Mankind: Se você falhar em participar, será como se nunca tivesse existido...”
+          </p>
+        </div>
+        <p>
+          <button onclick="$('#leiaMais').slideToggle()">Leia mais</button>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="colaboradores" layout="gray-10 fix">
+    <div text="center" layout="max-960 center v-padding-30 bottom-40 fix" links="no-decoration gray-80">
+      <h2>Colaboradores</h2>
+      <hr>
+      <div layout="inline-block right-40">
+        <a href="https://www.facebook.com/ErickSoaresFigueiredo" target="_blank" layout="flex items-center">
+          <img src="https://s.gravatar.com/avatar/76c7bfe1872bfa53e4c5b65330ca2b6e?s=80&r=g" alt="Erick Soares" layout="few-rounded">
+          <span text="left" layout="left-10">
+            <strong>Erick Soares</strong> <br>
+            Idealizador
+          </span>
+        </a>
+      </div>
+      <div layout="inline-block right-40">
+        <a href="http://araujo.cc" target="_blank" layout="flex items-center">
+          <img src="https://s.gravatar.com/avatar/07bd636cfc335ed96458d73bc014212a?s=80&r=g" alt="Arthur Araújo" layout="few-rounded">
+          <span text="left" layout="left-10">
+            <strong>Arthur Araújo</strong> <br>
+            Desenvolvedor Web
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer text="white .9em line-1.75" layout="gray-80 v-padding-40 fix" links="no-decoration gray-20 hover-orange">
+    <div layout="max-960 center">
+      <div cols="3">
+        <a href="http://labpirata.com" target="_blank">
+          <img src="/labpirata.png" alt="">
+          <br>
+          <span text="gray-20">
+            O LabPirata é uma incubadora de <br>
+            projetos tecnológicos que desenvolve <br>
+            inovação para pessoas e coletivos.
+          </span>
+        </a>
+      </div>
+      <div cols="3" layout="top-10" style="padding-left:50px">
+        <b layout="inline-block bottom-10">Mapa do site</b> <br>
+        <a href="#header">Conversor</a> <br>
+        <a href="#sobre">Sobre</a> <br>
+        <a href="#colaboradores">Colaboradores</a>
+      </div>
+      <div cols="3" layout="top-10">
+        <b layout="inline-block bottom-10">Links Úteis</b> <br>
+        <a href="https://www.memory-of-mankind.com/" target="_blank">MOM</a> <br>
+      </div>
+      <div cols="3">
+        <a layout="inline-block top-10" href="https://www.facebook.com/LabPiratas" target="_blank"><i class="fa fa-facebook fa-2x"></i></a>
+        &nbsp; &nbsp;
+        <a href="https://www.youtube.com/channel/UCU6m4HnIoBo77XppAINqZ4g" target="_blank"><i class="fa fa-youtube-play fa-2x"></i></a>
+        &nbsp; &nbsp;
+        <a href="https://www.instagram.com/labpiratas/" target="_blank"><i class="fa fa-instagram fa-2x"></i></a>
+        &nbsp; &nbsp;
+        <a href="https://github.com/labpiratas" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+        <p text=".8em">
+          <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">
+            CC BY <i class="fa fa-creative-commons"></i> ALGUNS DIREITOS RESERVADOS <br>
+            <small>(pode copiar o conteúdo desde que cite o autor)</small>
+          </a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script>
+  // smooth scrollTo
+  document.querySelectorAll('a[href*="#"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      try {
+        e.preventDefault()
+        window.scroll({
+          top: document.querySelector(this.getAttribute('href')).offsetTop,
+          left: 0,
+          behavior: 'smooth'
+        })
+        return false
+      } catch (e) {
+        console.log(e)
+        return true
+      }
+    })
+  })
+  var $get = function (id) {
+    return document.getElementById(id)
+  }
+  var converter = function (txt, id) {
+    txt = txt.replace(/[\n]{1,}/g, '\n')
+    txt = txt.replace(/\n/g, '       ')
+    txt = txt.replace(/[ ]{7,}/g, '       ')
+    txt = txt.trim()
+    $('#areaTexto').fadeOut(function () {
+      $('#resultado').val(txt)
+      $('#areaResultado').fadeIn()
+    })
+  }
+  var voltar = function (txt, id) {
+    $('#areaResultado').fadeOut(function () {
+      $('#areaTexto').fadeIn()
+      $('#resultado').val('')
+    })
+  }
+  // https://thiscouldbebetter.wordpress.com/2012/12/18/loading-editing-and-saving-a-text-file-in-html5-using-javascrip/
+  function saveTextAsFile(textToSave) {
+    var textToSaveAsBlob = new Blob([textToSave], {type: 'text/plain'})
+    var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob)
+
+    var downloadLink = document.createElement('a')
+    downloadLink.download = 'texto.txt'
+    downloadLink.innerHTML = 'Download File'
+    downloadLink.href = textToSaveAsURL
+    downloadLink.onclick = function (event) {
+      document.body.removeChild(event.target)
+    }
+    downloadLink.style.display = 'none'
+    document.body.appendChild(downloadLink)
+    downloadLink.click()
+  }
+  </script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-1871974-23"></script>
+  <script>
+  window.dataLayer = window.dataLayer || []
+  function gtag(){dataLayer.push(arguments)}
+  gtag('js', new Date())
+  gtag('config', 'UA-1871974-23')
+  </script>
+
+</body>
+</html>
